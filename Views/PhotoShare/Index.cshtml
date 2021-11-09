@@ -12,7 +12,7 @@
 @*Select Files and Upload: Displays a 'Select Files' button that uses a File Upload control to select files to be uploaded and
     calls the JS function: DisplayFilesToUpload() that lists the file name and size for all files to be uploaded.
     Also the JS function displays the Upload submit button that calls UploadAsync that uploads the files to Azure Blob Storage.*@
-@using (Html.BeginForm("UploadAsync", "PhotoShare", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("UploadA", "PhotoShare", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
 <div class="fileUpload btn btn-primary">
     <span>Select Files</span><input type="file" id="file" name="selectFiles" class="upload" onchange="DisplayFilesToUpload()" multiple />

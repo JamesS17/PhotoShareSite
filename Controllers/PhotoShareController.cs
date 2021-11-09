@@ -64,7 +64,7 @@ namespace PhotoShareSite.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> UploadAsync()
+        public async Task<ActionResult> UploadA()
         {
             try
             {
