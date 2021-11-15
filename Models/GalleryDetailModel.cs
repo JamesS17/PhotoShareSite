@@ -11,7 +11,8 @@ namespace PhotoShareSite.Models
         public string Title { get; set; }
         public DateTime CreatedOn { get; set; }
         public string Url { get; set; }
-
+        public string UserName { get; set; }
+        public string GeoLocation { get; set; }
         public List<string> Tags { get; set; }
     }
 }

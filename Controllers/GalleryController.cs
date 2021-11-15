@@ -38,8 +38,9 @@ namespace PhotoShareSite.Controllers
                 Title = image.Title,
                 CreatedOn = image.CreatedOn,
                 Url = image.Url,
-                Tags = image.Tags.Select(t => t.Description).ToList()
-
+                Tags = image.Tags.Select(t => t.Description).ToList(),
+                UserName = image.UserName,
+                GeoLocation = image.GeoLocation
             };
 
             return View(model);
