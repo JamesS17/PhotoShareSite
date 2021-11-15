@@ -30,6 +30,7 @@ namespace PhotoShareSite.Controllers
 
         public IActionResult Detail(int id)
         {
+
             var image = _imageService.GetById(id);
             var model = new GalleryDetailModel()
             {
