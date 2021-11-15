@@ -37,7 +37,7 @@ namespace PhotoShareSite
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ImageGalleryDbContext>();
+            //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ImageGalleryDbContext>();
        
 
             services.AddDbContext<ImageGalleryDbContext>();
