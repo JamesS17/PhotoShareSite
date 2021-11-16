@@ -6,23 +6,27 @@
                 <form asp-action="UploadNewImage" method="post" enctype="multipart/form-data" id="upload-form">
                     <div class="form-group">
                         <label asp-for="Title"></label>
-                        <input asp-for="Title" class="form-control"></input>
+                        <input asp-for="Title" class="form-control"></>
                     </div>
                     <div class="form-group">
                         <label asp-for="GeoLocation">Location</label>
-                        <input asp-for="GeoLocation" class="form-control"></input>
+                        <input asp-for="GeoLocation" class="form-control"></>
                     </div>
                     <div class="form-group">
                         <label asp-for="Tags">Tags (Divided By A ',')</label>
-                        <input asp-for="Tags" class="form-control"></input>
+                        <input asp-for="Tags" class="form-control"></>
                     </div>
                     <div>
 
-                        <label class="btn btn-default btn-file">
-                            Browse for Image
-                            <input type="file" name="file" style="display: none" />
-                        </label>
+                        <div class="fileUpload btn btn-primary">
+                            <span>Browse for Image</span>
+                            <input type="file" name="file" id="file" class="upload" onchange="DisplayFilesToUpload()" />
+
+                        </div>
+                        <p id="FilesToUpload"></p>
+                        <img id="file" />
                     </div>
+                    
                     <div class="submit">
                         <button type="submit" id="btn-upload" class="btn btn-info">Submit</button>
                     </div>
@@ -30,3 +34,28 @@
             </div>
         </div>
     </div>
+    <body>
+        </body>
+  
+    <script>
+
+        //Lists the file name and size for all files to be uploaded by updating the <p id="FilesToUpload"></p> control
+        function DisplayFilesToUpload() {
+            var element = document.getElementById("file");
+            var html = "";
+
+            html = "<h4>Image to Upload</h4>"
+
+            
+                
+            var file = element.files[0];
+
+            
+                if ('name' in file) { html += file.name + " ("; }
+            if ('size' in file) { html += "size: " + file.size + " bytes)<br>"; }
+
+
+            document.getElementById("FilesToUpload").innerHTML = html;
+        }
+
+    </script>

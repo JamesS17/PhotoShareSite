@@ -1,4 +1,5 @@
 ﻿using ImageGallery.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -24,6 +25,7 @@ namespace PhotoShareSite.Controllers
             AzureConnectionString = _config["AzureStorageConnectionString"];
 
         }
+        [Authorize]
         public IActionResult Upload()
         {
             var model = new UploadImageModel();
