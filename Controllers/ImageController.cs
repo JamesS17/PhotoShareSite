@@ -1,9 +1,12 @@
 ﻿using ImageGallery.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using PhotoShareSite.Models;
 using System.Net.Http.Headers;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace PhotoShareSite.Controllers
@@ -20,7 +23,9 @@ namespace PhotoShareSite.Controllers
             _config = config;
             _imageService = imageService;
             AzureConnectionString = _config["AzureStorageConnectionString"];
+
         }
+        [Authorize]
         public IActionResult Upload()
         {
             var model = new UploadImageModel();
@@ -29,17 +34,19 @@ namespace PhotoShareSite.Controllers
 
         [HttpPost]
        
-    public async Task<IActionResult> UploadNewImage(IFormFile file, string title, string tags)
+    public async Task<IActionResult> UploadNewImage(IFormFile file, string title, string tags, string geoLocation)
     {
             
 
             var container = _imageService.GetBlobContainer(AzureConnectionString, "photodb");
         var content = ContentDispositionHeaderValue.Parse(file.ContentDisposition);
         var fileName = content.FileName.Trim('"');
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // will give the user's userId
+            var userName = User.FindFirstValue(ClaimTypes.Name);
 
-        var blob = container.GetBlockBlobReference(fileName);
+            var blob = container.GetBlockBlobReference(fileName);
         await blob.UploadFromStreamAsync(file.OpenReadStream());
-        await _imageService.SetImage(title, tags, blob.Uri);
+        await _imageService.SetImage(title, tags, blob.Uri, userId, userName, geoLocation);
 
 
 
