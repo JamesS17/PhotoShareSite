@@ -1,4 +1,5 @@
 ﻿using ImageGallery.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PhotoShareSite.Models;
 using System;
@@ -16,6 +17,7 @@ namespace PhotoShareSite.Controllers
         {
             _imageService = imageService;
         }
+        [Authorize]
         public IActionResult Index()
         {
             var imageList = _imageService.GetAll();
@@ -30,6 +32,7 @@ namespace PhotoShareSite.Controllers
 
         public IActionResult Detail(int id)
         {
+
             var image = _imageService.GetById(id);
             var model = new GalleryDetailModel()
             {
@@ -37,8 +40,9 @@ namespace PhotoShareSite.Controllers
                 Title = image.Title,
                 CreatedOn = image.CreatedOn,
                 Url = image.Url,
-                Tags = image.Tags.Select(t => t.Description).ToList()
-
+                Tags = image.Tags.Select(t => t.Description).ToList(),
+                UserName = image.UserName,
+                GeoLocation = image.GeoLocation
             };
 
             return View(model);
