@@ -1,47 +1,72 @@
-﻿@model PhotoShareSite.Models.GalleryDetailModel
-@*
-    <div class="container body-content">
-        <div class="row image-detail-container">
-            <div class="image-detail" ">
-                <img src="@Model.Url" alt="@Model.Title" />
-            </div>
-        </div>
-        <div class="row image-detail-meta ">
-            <span>Title: @Model.Title</span>
-            <span>   Uploaded: @Model.CreatedOn</span>
-            <span>Geoloction: @Model.GeoLocation</span>
-            <span>   Uploaded By: @Model.UserName</span>
-        </div>
-        <div class="row controls">
-            <a class="btn btn-primary" asp-controller="Gallery" asp-action="Index">Back To Gallery</a>
-        </div>
-    </div>
-*@
+﻿
 
-<div class="row">
-    <div class="col-md-9">
-        <div class="row image-detail-container">
-            <div class="image-detail" ">
-                <img src="@Model.Url" alt="@Model.Title" />
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model PhotoShareSite.Models.GalleryDetailModel
+
+
+        <div class="row">
+            <div class="col-md-9">
+                <div class="row image-detail-container">
+                    <div class="image-detail" ">
+                        <img src="@Model.Url" alt="@Model.Title" />
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-    
-    <div class="col-md-3 col-md-offset-2">
-        <div class="row image-detail-meta ">
-            <span>Title: @Model.Title</span>
-        </div>
-            <div class="row image-detail-meta ">
-                <span>   Uploaded: @Model.CreatedOn</span>
-            </div>
-            <div class="row image-detail-meta ">
-                <span>Geoloction: @Model.GeoLocation</span>
-            </div>
+
+            <div class="col-md-3 col-md-offset-2">
+                <div class="row image-detail-meta ">
+                    <span>Title: @Model.Title</span>
+                </div>
+                <div class="row image-detail-meta ">
+                    <span>   Uploaded: @Model.CreatedOn</span>
+                </div>
+                <div class="row image-detail-meta ">
+                    <span>Geoloction: @Model.GeoLocation</span>
+                </div>
                 <div class="row image-detail-meta ">
                     <span>   Uploaded By: @Model.UserName</span>
                 </div>
-                <div class="row controls">
-                    <a class="btn btn-primary" asp-controller="Gallery" asp-action="Index">Back To Gallery</a>
-                </div>
+                <p>
+                    <div class="row controls">
+                        <a class="btn btn-warning" asp-controller="Gallery" asp-action="Index">Edit Details</a>
+
+
+                    </div>
+                </p>
+                <p>
+                    <div class="row controls">
+                        <a class="btn btn-secondary" asp-controller="Gallery" asp-action="Index">Add To Album</a>
+
+
+                    </div>
+                </p>
+                <p>
+                    <div class="row controls">
+                        <a class="btn btn-success" asp-controller="Gallery" asp-action="Index">Share This Photo</a>
+
+
+                    </div>
+                </p>
+
+                <p>
+                    <div class="row controls">
+
+
+                        @using (Html.BeginForm("DeleteImage", "Image", new { Id = Model.Id }, FormMethod.Post))
+                        {
+                            <button type="submit" class="btn btn-danger">Delete This Photo</button>
+                        }
+
+                    </div>
+                </p>
+                <p>
+                    <div class="row controls">
+                        @using (Html.BeginForm("Index", "Gallery", FormMethod.Post))
+                        {
+                            <button type="submit" class="btn btn-primary">Back To Gallery</button>
+                        }
+                    </div>
+                </p>
             </div>
-</div>
+        </div>
+
