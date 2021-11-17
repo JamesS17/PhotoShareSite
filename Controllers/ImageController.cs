@@ -1,9 +1,12 @@
 ﻿using ImageGallery.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using PhotoShareSite.Models;
+using System;
+using System.IO;
 using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -24,6 +27,7 @@ namespace PhotoShareSite.Controllers
             AzureConnectionString = _config["AzureStorageConnectionString"];
 
         }
+        [Authorize]
         public IActionResult Upload()
         {
             var model = new UploadImageModel();
@@ -50,5 +54,24 @@ namespace PhotoShareSite.Controllers
 
         return RedirectToAction("Index", "Gallery");
     }
-}
+
+        public async Task<IActionResult> DeleteImage(int id)
+        {
+            var image = _imageService.GetById(id);
+            Uri uri = new Uri(image.Url);
+            var container = _imageService.GetBlobContainer(AzureConnectionString, "photodb");
+
+
+            string filename = Path.GetFileName(uri.LocalPath);
+
+            var blob = container.GetBlockBlobReference(filename);
+
+            await _imageService.DelImage(id);
+            await blob.DeleteIfExistsAsync();
+
+
+
+            return RedirectToAction("Index", "Gallery");
+        }
+    }
 }
