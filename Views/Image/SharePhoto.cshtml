@@ -1,0 +1,43 @@
+﻿
+
+
+@model PhotoShareSite.Models.ShareModel
+
+
+<div class="row">
+    <div class="col-md-9">
+        <div class="row image-detail-container">
+            <div class="image-detail" ">
+                <img src="@Model.Url" />
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 col-md-offset-2">
+        <div class="row image-detail-meta ">
+            <span>You are about to share this photo with:</span>
+        </div>
+        <div class="row image-detail-meta ">
+            <span>@Model.UserName</span>
+        </div>
+        <p>
+            <div class="row controls">
+
+
+                @using (Html.BeginForm("ConfShareImage", "Image", new { photoId = Model.ImgId, userId = Model.UserId}, FormMethod.Post))
+                {
+                    <button type="submit" class="btn btn-primary">Share</button>
+                }
+            </div>
+        </p>
+        <p>
+            <div class="row controls">
+                @using (Html.BeginForm("Index", "Gallery", FormMethod.Post))
+                {
+                    <button type="submit" class="btn btn-danger">Cancel</button>
+                }
+            </div>
+        </p>
+    </div>
+</div>
+

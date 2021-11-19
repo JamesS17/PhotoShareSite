@@ -6,7 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using PhotoShareSite.Models;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -35,25 +37,57 @@ namespace PhotoShareSite.Controllers
         }
 
         [HttpPost]
-       
-    public async Task<IActionResult> UploadNewImage(IFormFile file, string title, string tags, string geoLocation)
-    {
+        public async Task<IActionResult> UploadNewImage(IFormFile file, string title, string tags, string geoLocation)
+        {
             
 
-            var container = _imageService.GetBlobContainer(AzureConnectionString, "photodb");
-        var content = ContentDispositionHeaderValue.Parse(file.ContentDisposition);
-        var fileName = content.FileName.Trim('"');
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // will give the user's userId
-            var userName = User.FindFirstValue(ClaimTypes.Name);
+                var container = _imageService.GetBlobContainer(AzureConnectionString, "photodb");
+            var content = ContentDispositionHeaderValue.Parse(file.ContentDisposition);
+            var fileName = content.FileName.Trim('"');
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // will give the user's userId
+                var userName = User.FindFirstValue(ClaimTypes.Name);
 
-            var blob = container.GetBlockBlobReference(fileName);
-        await blob.UploadFromStreamAsync(file.OpenReadStream());
-        await _imageService.SetImage(title, tags, blob.Uri, userId, userName, geoLocation);
+                var blob = container.GetBlockBlobReference(fileName);
+            await blob.UploadFromStreamAsync(file.OpenReadStream());
+            await _imageService.SetImage(title, tags, blob.Uri, userId, userName, geoLocation);
 
 
 
-        return RedirectToAction("Index", "Gallery");
-    }
+            return RedirectToAction("Index", "Gallery");
+        }
+
+        public IActionResult EditPhoto(int id)
+        {
+
+            var image = _imageService.GetById(id);
+            string imgT = "*$%";
+            foreach (var item in image.Tags.Select(t => t.Description).ToList())
+            {
+                imgT = imgT+", " + item;
+            }
+            imgT = imgT.Replace("*$%, ", "");
+            var model = new EditPhotoModel()
+            {
+                Id = image.Id,
+                Title = image.Title,
+                Tags = imgT,
+                GeoLocation = image.GeoLocation
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditImage(int id, string title, string tags, string geoLocation)
+        {
+
+
+            await _imageService.EditImage(id, title, tags, geoLocation);
+
+
+
+            return RedirectToAction("Index", "Gallery");
+        }
 
         public async Task<IActionResult> DeleteImage(int id)
         {
@@ -70,6 +104,31 @@ namespace PhotoShareSite.Controllers
             await blob.DeleteIfExistsAsync();
 
 
+
+            return RedirectToAction("Index", "Gallery");
+        }
+
+        public IActionResult SharePhoto(int photoId, string userId, string userName)
+        {
+
+            var image = _imageService.GetById(photoId);
+            var model = new ShareModel()
+            {
+                Url = image.Url,
+                UserName = userName,
+                ImgId= photoId,
+                UserId= userId
+            };
+
+
+            return View(model);
+        }
+
+        public async Task<IActionResult> ConfShareImage(int photoId, string userId)
+        {
+            var byId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            await _imageService.ShareImage(photoId, byId, userId);
 
             return RedirectToAction("Index", "Gallery");
         }
