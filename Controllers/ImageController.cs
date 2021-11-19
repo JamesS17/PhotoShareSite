@@ -107,5 +107,32 @@ namespace PhotoShareSite.Controllers
 
             return RedirectToAction("Index", "Gallery");
         }
+
+
+        public IActionResult SharePhoto(int photoId, string userId, string userName)
+        {
+
+            var image = _imageService.GetById(photoId);
+            var model = new ShareModel()
+            {
+                Url = image.Url,
+                UserName = userName,
+                ImgId= photoId,
+                UserId= userId
+            };
+
+
+            return View(model);
+        }
+
+        public async Task<IActionResult> ConfShareImage(int photoId, string userId)
+        {
+            var byId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            await _imageService.ShareImage(photoId, byId, userId);
+
+            return RedirectToAction("Index", "Gallery");
+        }
+
     }
 }

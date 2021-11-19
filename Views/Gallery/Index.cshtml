@@ -1,27 +1,84 @@
 ﻿@model PhotoShareSite.Models.GalleryIndexModel
 
-<div class = "container body-content">
+<div class="container body-content">
+    <form asp-controller="Gallery" asp-action="Index">
+        <p>
+            Tag: <input type="text" name="SearchQuery" />
+            <input type="submit" value="Filter" />
+        </p>
+    </form>
     <div class="row gallery-content">
-        @foreach (var image in Model.Images)
+        @if (Model.Images.Count() == 0 && Model.OtherImages.Count() == 0)
         {
-            <div class="gallery-image-container drop-shadow">
-                <a asp-controller="Gallery" asp-action="Detail" asp-route-id="@image.Id">
-                    <div class="gallery-image" style="background-image:url(@image.Url)"></div>
-                </a>
-            </div>
-            @*
-            <span>@image.Title</span>
-            <ul>
-                @foreach (var tag in image.Tags)
-                {
-                    <li>
-                        @tag.Description
-                    </li>
-                }
+            <div class="h-25"><h1 class="display-4">No Photo's To Show</h1></div>
 
-            </ul>
-*@
         }
+        @if (Model.Images.Count() > 0)
+        {
+    <p><div class="h-25"><h1 class="display-4">Your Photo's</h1></div></p>
+
+        }
+        <p>
+            <div class="row gallery-content">
+                @foreach (var image in Model.Images)
+                {
+
+                    <div class="gallery-image-container drop-shadow">
+                        <a asp-controller="Gallery" asp-action="Detail" asp-route-id="@image.Id">
+                            <div class="gallery-image" style="background-image:url(@image.Url)"></div>
+                        </a>
+                    </div>
+                    @*
+                    <span>@image.Title</span>
+                    <ul>
+                        @foreach (var tag in image.Tags)
+                        {
+                            <li>
+                                @tag.Description
+                            </li>
+                        }
+
+                    </ul>
+                    *@
+                }
+            </div>
+        </p>
     </div>
+
+    <div class="row gallery-content">
+        @if (Model.OtherImages.Count() > 0)
+        {
+        <p>
+            <div class="h-25"><h1 class="display-4">Photo's Shared To You</h1></div>
+        </p>
+
+            }
+<p>
+        <div class="row gallery-content">
+            @foreach (var image in Model.OtherImages)
+            {
+
+                <div class="gallery-image-container drop-shadow">
+                    <a asp-controller="Gallery" asp-action="Detail" asp-route-id="@image.Id">
+                        <div class="gallery-image" style="background-image:url(@image.Url)"></div>
+                    </a>
+                </div>
+                @*
+                <span>@image.Title</span>
+                <ul>
+                    @foreach (var tag in image.Tags)
+                    {
+                        <li>
+                            @tag.Description
+                        </li>
+                    }
+
+                </ul>
+                *@
+            }
+        </div>
+    </p>
+    </div>
+
 
 </div>
