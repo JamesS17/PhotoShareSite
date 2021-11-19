@@ -108,6 +108,7 @@ namespace PhotoShareSite.Controllers
             return RedirectToAction("Index", "Gallery");
         }
 
+
         public IActionResult SharePhoto(int photoId, string userId, string userName)
         {
 
@@ -132,5 +133,6 @@ namespace PhotoShareSite.Controllers
 
             return RedirectToAction("Index", "Gallery");
         }
+
     }
 }

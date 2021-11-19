@@ -38,13 +38,16 @@
                 </p>
                 <p>
                     <div class="row controls">
+
                         <a class="btn btn-success" asp-controller="Gallery" asp-action="Index">Add To Album</a>
+
 
 
                     </div>
                 </p>
                 <p>
                     <div class="row controls">
+
                         @using (Html.BeginForm("Index", "Users", new { Id = Model.Id }, FormMethod.Post))
                         {
                     <button type="submit" class="btn btn-primary">Share This Photo</button>
@@ -54,7 +57,9 @@
                 </p>
                 <p>
                     <div class="row controls">
+
                         <a class="btn btn-primary" href="@Model.Url" target="_blank">Download This Photo</a>
+
                         
                     </div>
                 </p>
@@ -73,7 +78,9 @@
                     <div class="row controls">
                         @using (Html.BeginForm("Index", "Gallery", FormMethod.Post))
                         {
+
                             <button type="submit" class="btn btn-secondary">Back To Gallery</button>
+
                         }
                     </div>
                 </p>
