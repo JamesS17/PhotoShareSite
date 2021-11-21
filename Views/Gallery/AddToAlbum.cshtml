@@ -5,7 +5,10 @@
     <form asp-controller="Gallery" asp-action="AddToAlbumWag">
         <p>
             Create A New Album: <input type="text" asp-for="AlbumName" />
-            <input type="submit" value="Add" class="btn btn-primary" />
+            <input type="submit" value="Add" class="btn btn-primary" /> @using (Html.BeginForm("Index", "Gallery", FormMethod.Post))
+            {
+                <button type="submit" class="btn btn-secondary">Back To Gallery</button>
+            }
         </p>
     </form>
     <p>

@@ -4,7 +4,7 @@
     <div class="row upload-container">
         <div class="upload-form drop-shadow">
             <form asp-action="EditImage" asp-route-id="Model.Id" method="post" enctype="multipart/form-data" id="upload-form">
-                <div class="h-25"><h3 >Edit Photo Details</h3></div>
+                <div class="h-25"><h3>Edit Photo Details</h3></div>
                 <div class="text-hide">
 
                     <input asp-for="Id" class="text-hide"></>
@@ -26,6 +26,10 @@
                 <div class="submit">
                     <button type="submit" id="btn-upload" class="btn btn-info">Save</button>
                 </div>
+                @using (Html.BeginForm("Index", "Gallery", FormMethod.Post))
+                {
+                    <button type="submit" class="btn btn-secondary">Back To Gallery</button>
+                }
             </form>
         </div>
     </div>
