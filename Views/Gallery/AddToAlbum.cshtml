@@ -1,0 +1,22 @@
+﻿@model PhotoShareSite.Models.AlbumAddModel
+
+<div class="container body-content">
+    
+    <form asp-controller="Gallery" asp-action="AddToAlbumWag">
+        <p>
+            Create A New Album: <input type="text" asp-for="AlbumName" />
+            <input type="submit" value="Add" class="btn btn-primary" />
+        </p>
+    </form>
+    <p>
+        @foreach (var item in Model.Albums)
+        {
+    <p>
+        @using (Html.BeginForm("AddToAlbum", "Image", new { photoId = Model.PhotoId, albumId = item.Id }, FormMethod.Post))
+        {
+            <button type="submit" class="btn btn-success">@item.Description</button>
+        }
+    </p>
+            }
+        </p>
+    </div>

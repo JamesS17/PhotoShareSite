@@ -1,0 +1,46 @@
+﻿
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model PhotoShareSite.Models.GalleryDetailModel
+
+
+<div class="row">
+    <div class="col-md-9">
+        <div class="row image-detail-container">
+            <div class="image-detail" ">
+                <img src="@Model.Url" alt="@Model.Title" />
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 col-md-offset-2">
+        <p>
+            <div class="h-25"><h3>Are You Sure You Want To DELETE This Photo And All It's Data</h3></div>
+
+        </p>
+
+            <div class="h-25"><h3></h3></div>
+
+
+
+            <div class="col-md-4 col-md-offset-5">
+                @using (Html.BeginForm("DeleteImage", "Image", new { Id = Model.Id }, FormMethod.Post))
+                {
+                <button type="submit" class="btn btn-danger">YES</button>
+                }
+            </div>
+
+<p>
+            <div class="col-md-4 col-md-offset-5">
+                @using (Html.BeginForm("Index", "Gallery", FormMethod.Post))
+                {
+                <button type="submit" class="btn btn-secondary">NO</button>
+                }
+            </div>
+
+
+
+        </p>
+    </div>
+</div>
+

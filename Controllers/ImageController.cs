@@ -132,5 +132,17 @@ namespace PhotoShareSite.Controllers
 
             return RedirectToAction("Index", "Gallery");
         }
+
+        [HttpPost]
+        public async Task<IActionResult> AddToAlbum(int photoId, int albumId)
+        {
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            await _imageService.AddToAlbums(userId, photoId, albumId);
+
+
+
+            return RedirectToAction("Album", "Gallery", albumId);
+        }
     }
 }
