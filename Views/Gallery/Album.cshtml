@@ -1,0 +1,49 @@
+﻿@model PhotoShareSite.Models.AlbumShowModel
+
+<div class="container body-content">
+
+    <div class="row">
+        
+            @foreach (var item in Model.Albums)
+            {
+        <div class="col-lg-1" >
+
+                @using (Html.BeginForm("Album", "Gallery", new { albumQuery = item.Id }, FormMethod.Post))
+                {
+
+                    <button type="submit" class="btn btn-success">@item.Description</button>
+
+                }
+   
+        </div>
+            }
+        
+    </div>
+
+    <div class="row gallery-content">
+        @if (Model.Images.Count() == 0)
+        {
+        <p>
+            <div class="h-25"><h1 class="display-4">No Photo's To Show</h1></div>
+        </p>
+            }
+            @if (Model.Images.Count() > 0)
+            {
+<p><div class="h-25"><h1 class="display-4">Your Photo's</h1></div></p>
+
+        }
+        <p>
+            <div class="row gallery-content">
+                @foreach (var image in Model.Images)
+                {
+
+                    <div class="gallery-image-container drop-shadow">
+                        <a asp-controller="Gallery" asp-action="Detail" asp-route-id="@image.Id">
+                            <div class="gallery-image" style="background-image:url(@image.Url)"></div>
+                        </a>
+                    </div>
+                }
+            </div>
+        </p>
+    </div>
+</div>

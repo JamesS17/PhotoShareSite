@@ -28,10 +28,13 @@
                     <td>@user.Email</td>
 
                 </tr>
-                
+
             }
         </table>
-    </div>
+    </div> @using (Html.BeginForm("Index", "Gallery", FormMethod.Post))
+    {
+        <button type="submit" class="btn btn-secondary">Back To Gallery</button>
+    }
 
     <div class="panel-footer">
         <p class="box-title"><b>Total Users till @String.Format("{0 : dddd, MMMM d, yyyy}", DateTime.Now)  : </b><span class="label label-primary">@Model.Count()</span></p>
