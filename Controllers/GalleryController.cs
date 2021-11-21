@@ -1,5 +1,7 @@
 ﻿using ImageGallery.Data;
+
 using ImageGallery.Data.Models;
+
 using Microsoft.AspNetCore.Mvc;
 using PhotoShareSite.Models;
 using System;
@@ -18,25 +20,9 @@ namespace PhotoShareSite.Controllers
         {
             _imageService = imageService;
         }
-        /*
-        public IActionResult Index()
-        {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var imageList = _imageService.GetGallery(userId);
-            var imageList2 = _imageService.GetImgOther(userId);
 
-         
+        
 
-            var model = new GalleryIndexModel()
-            {
-                Images = imageList,
-                OtherImages= imageList2,
-                SearchQuery = ""
-
-            };
-
-            return View(model);
-        }*/
 
         public IActionResult Index(string SearchQuery)
         {

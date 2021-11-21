@@ -108,6 +108,7 @@ namespace PhotoShareSite.Controllers
             return RedirectToAction("Index", "Gallery");
         }
 
+
         public IActionResult SharePhoto(int photoId, string userId, string userName)
         {
 
@@ -133,6 +134,7 @@ namespace PhotoShareSite.Controllers
             return RedirectToAction("Index", "Gallery");
         }
 
+
         [HttpPost]
         public async Task<IActionResult> AddToAlbum(int photoId, int albumId)
         {
@@ -144,5 +146,6 @@ namespace PhotoShareSite.Controllers
 
             return RedirectToAction("Album", "Gallery", albumId);
         }
+
     }
 }
